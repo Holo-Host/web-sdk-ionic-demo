@@ -14,6 +14,8 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
     avatar_url: "Not set"
   })
 
+  const [newNickname, setNewNickname] = useState("")
+
   const signIn = () => {
     console.log('creating connection')
     const connection = new Connection(
@@ -45,10 +47,11 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
       'profile',
       'update_my_profile',
       {
-        nickname: 'Alice',
-        avatar_url: "https://alice.img"
+        nickname: newNickname,
+        avatar_url: `https://${newNickname}.img`
       }
     ).then(result => {
+      setNewNickname("")
       console.log(`\n\nRESULT OF update_my_profile \n${inspect(result)}\n\n`)
     })
   }
@@ -74,10 +77,22 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
   return (
     <div className="container">
       {!webSdkConnection && <button onClick={signIn}>Sign In</button>}
-      {webSdkConnection && <button onClick={updateProfile}>Update Profile</button>}
-      {webSdkConnection && <button onClick={getProfile}>Get Profile</button>}
-      <div>Nickname: {profile.nickname}</div>
-      <div>Avatar Url: {profile.avatar_url}</div>
+      {webSdkConnection && <>
+        <div>Nickname: {profile.nickname}</div>
+        <div>Avatar Url: {profile.avatar_url}</div>
+        <div>
+          <button onClick={getProfile}>Get Profile</button>
+        </div>
+        <div style={{ borderBottom: "1px solid lightgray" }} />
+        <div>
+          <label>New Nickname
+            <input value={newNickname} onChange={e => setNewNickname(e.target.value)} />
+          </label>
+        <div>
+          <button onClick={updateProfile}>Update Profile</button>
+        </div>
+      </div>
+    </>}
     </div>
   );
 };

@@ -15,6 +15,18 @@ npm run holo:chaperone
 ```
 
 third terminal
+
+make sure you have cocoapods installed. You can check with
+```
+pod --version
+```
+and install with
+```
+brew install cocoapods
+```
+
+then run
+
 ```
 npm run ios
 ```
